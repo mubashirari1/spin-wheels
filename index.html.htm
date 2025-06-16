@@ -282,12 +282,10 @@
                         <input type="tel" id="user-mobile" placeholder="Enter Your Mobile Number" required>
                     </div>
                     
-                    <!-- WhatsApp Share Button is now here -->
                     <a id="whatsapp-share-btn" href="#" class="glowing-btn">
                         1. Share on WhatsApp
                     </a>
                     
-                    <!-- Claim button starts disabled -->
                     <button type="submit" id="claim-btn" class="glowing-btn" disabled>
                         2. Claim Prize
                     </button>
@@ -308,14 +306,12 @@
         const spinWheel = document.getElementById('spin-wheel');
         const resultModal = document.getElementById('result-modal');
         const prizeMessage = document.getElementById('prize-message');
-        
-        // References for the claim flow
         const claimSection = document.getElementById('claim-section');
         const claimForm = document.getElementById('claim-form');
         const whatsappShareBtn = document.getElementById('whatsapp-share-btn');
         const claimBtn = document.getElementById('claim-btn');
         const successMessage = document.getElementById('success-message');
-        const userNameInput = document.getElementById('user-name'); // User name input reference
+        const userNameInput = document.getElementById('user-name');
 
         // --- Prize Configuration ---
         const prizes = [
@@ -328,7 +324,7 @@
         const segmentDegrees = 360 / prizes.length;
         let isSpinning = false;
         let currentRotation = 0;
-        let wonPrize = ''; // Variable to store the winning prize
+        let wonPrize = '';
 
         // --- Spin Button Logic ---
         spinBtn.addEventListener('click', () => {
@@ -342,7 +338,7 @@
                 winningSegmentIndex = Math.floor(Math.random() * prizes.length);
             } while (winningSegmentIndex === losingPrizeIndex);
 
-            wonPrize = prizes[winningSegmentIndex]; // Store the prize here
+            wonPrize = prizes[winningSegmentIndex];
             const fullSpins = 5 * 360;
             const targetAngle = winningSegmentIndex * segmentDegrees;
             const randomOffset = Math.random() * (segmentDegrees - 10) - (segmentDegrees / 2 - 5);
@@ -353,13 +349,11 @@
 
             spinWheel.addEventListener('transitionend', () => {
                 confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
-
                 prizeMessage.textContent = `Congratulations! You won ${wonPrize}!`;
                 
-                // Reset and show the modal
                 claimBtn.disabled = true;
                 claimBtn.textContent = '2. Claim Prize';
-                whatsappShareBtn.textContent = '1. Share on WhatsApp'; // Reset share button text
+                whatsappShareBtn.textContent = '1. Share on WhatsApp';
                 resultModal.style.display = 'flex';
                 claimSection.style.display = 'block';
                 successMessage.style.display = 'none';
@@ -367,27 +361,26 @@
             }, { once: true });
         });
 
-        // --- [UPDATED] WhatsApp Share Logic ---
+        // --- [UPDATED] WhatsApp Share Logic with Website Link ---
         whatsappShareBtn.addEventListener('click', (event) => {
-            event.preventDefault(); // Prevent the default link behavior
+            event.preventDefault();
 
             const userName = userNameInput.value.trim();
 
-            // Check if user has entered a name
             if (userName === '') {
                 alert('Please enter your name to share!');
-                userNameInput.focus(); // Focus on the name input field
-                return; // Stop the function
+                userNameInput.focus();
+                return;
             }
 
-            // Create the personalized share text
-            const shareText = `${userName} just won a ${wonPrize} on this Spin & Win page! Try your luck too!`;
+            // Create the personalized share text WITH the website link
+            const shareText = `${userName} just won a ${wonPrize} on this Spin & Win page! Try your luck too!\n\n${window.location.href}`;
             const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
 
             // Open WhatsApp
             window.open(whatsappUrl, '_blank');
 
-            // After sharing, enable the claim button
+            // Enable the claim button
             claimBtn.disabled = false;
             whatsappShareBtn.textContent = 'Shared! Now Claim Below';
         });
@@ -404,11 +397,9 @@
                 return;
             }
             
-            // Hide the form and show the success message
             claimSection.style.display = 'none';
             successMessage.style.display = 'block';
             
-            // You can add code here to send the data to a server if needed
             console.log(`Claim Submitted: Name - ${name}, Mobile - ${mobile}, Prize - ${wonPrize}`);
         });
 
@@ -440,5 +431,3 @@
 	};
 </script>
 <script type="text/javascript" src="//www.highperformanceformat.com/244b2e70be64a476818355390380a8ed/invoke.js"></script>
-<script async="async" data-cfasync="false" src="//pl26891867.profitableratecpm.com/255ca1588dcf0a0404637714c2746149/invoke.js"></script>
-<div id="container-255ca1588dcf0a0404637714c2746149"></div>
